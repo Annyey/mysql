@@ -1,0 +1,330 @@
+Microsoft Windows [版本 10.0.17134.345]
+(c) 2018 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>net start mysql80
+请求的服务已经启动。
+
+请键入 NET HELPMSG 2182 以获得更多的帮助。
+
+
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database shopping2charset=uft8
+    -> create database shopping2charset=uft8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=uft8
+create database shopping2charset=uft8' at line 1
+mysql> create database shopping2 charset=uft8;
+ERROR 1115 (42000): Unknown character set: 'uft8'
+mysql> create database shopping2 charset=utf8;
+Query OK, 1 row affected, 1 warning (0.22 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> create table shopping2(id int auto_increment,primary key,name varchar(10) not null,money varchar(3));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',name varchar(10) not null,money varchar(3))' at line 1
+mysql> create table shopping2(id int auto_increment primary key name varchar(10) not null money varchar(3));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name varchar(10) not null money varchar(3))' at line 1
+mysql> create table shopping2(id int auto_increment primary key,name varchar(20) not null, money varchar(3));
+ERROR 1046 (3D000): No database selected
+mysql> create table shopping2 (id int primary key auto_increment,name varchar(20),money varchar(3));
+ERROR 1046 (3D000): No database selected
+mysql> create table shopping2 (id int primary key auto_increment,name varchar(20));
+ERROR 1046 (3D000): No database selected
+mysql> use database shopping2;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use shopping2;
+Database changed
+mysql> create table shopping21 (id int primary key auto_increment,name varchar(20));
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> desc table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table' at line 1
+mysql> desc shopping21;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(20) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.15 sec)
+
+mysql> desc shopping21;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(20) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from shopping21
+    -> ;
+Empty set (0.00 sec)
+
+mysql> insert into (name) values("xie");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(name) values("xie")' at line 1
+mysql> insert into (name) values(xie");
+    "> insert into shopping21(name) values("xie");
+    "> ;
+    "> ^C
+mysql> insert into shopping21(name) values("xie");
+Query OK, 1 row affected (0.27 sec)
+
+mysql> select * from shopping21;
++----+------+
+| id | name |
++----+------+
+|  1 | xie  |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> alter table shopping21 add (like varchar(3));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like varchar(3))' at line 1
+mysql> alter table shopping21 add like varchar(3);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like varchar(3)' at line 1
+mysql> alter table shopping21 add xihuan varchar(3);
+Query OK, 0 rows affected (0.49 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc shopping21;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(20) | YES  |     | NULL    |                |
+| xihuan | varchar(3)  | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from shopping21;
++----+------+--------+
+| id | name | xihuan |
++----+------+--------+
+|  1 | xie  | NULL   |
++----+------+--------+
+1 row in set (0.00 sec)
+
+mysql> alter table shopping21 add zhekou varchar(2);
+Query OK, 0 rows affected (0.38 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from shopping;
+ERROR 1146 (42S02): Table 'shopping2.shopping' doesn't exist
+mysql> select * from shopping21;
++----+------+--------+--------+
+| id | name | xihuan | zhekou |
++----+------+--------+--------+
+|  1 | xie  | NULL   | NULL   |
++----+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from shopping21 add wish varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add wish varchar(10)' at line 1
+mysql> select * from shopping21 add yuanwang varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add yuanwang varchar(10)' at line 1
+mysql> alter table shopping21 add yuanwang varchar(10);
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from shopping21;
++----+------+--------+--------+----------+
+| id | name | xihuan | zhekou | yuanwang |
++----+------+--------+--------+----------+
+|  1 | xie  | NULL   | NULL   | NULL     |
++----+------+--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into shopping21 (name) values("luotoTxu");
+Query OK, 1 row affected (0.21 sec)
+
+mysql> desc shopping21;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(20) | YES  |     | NULL    |                |
+| xihuan   | varchar(3)  | YES  |     | NULL    |                |
+| zhekou   | varchar(2)  | YES  |     | NULL    |                |
+| yuanwang | varchar(10) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into shopping21 (name) values("luotoTxu");
+Query OK, 1 row affected (0.24 sec)
+
+mysql> desc shopping21;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(20) | YES  |     | NULL    |                |
+| xihuan   | varchar(3)  | YES  |     | NULL    |                |
+| zhekou   | varchar(2)  | YES  |     | NULL    |                |
+| yuanwang | varchar(10) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | NULL   | NULL   | NULL     |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
+|  3 | luotoTxu | NULL   | NULL   | NULL     |
++----+----------+--------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from shopping21 where id=3;
+Query OK, 1 row affected (0.29 sec)
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | NULL   | NULL   | NULL     |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
++----+----------+--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> alter table shopping21 change xihuan where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where id=1' at line 1
+mysql> update shopping set xihuan=1 where name="xie";
+ERROR 1146 (42S02): Table 'shopping2.shopping' doesn't exist
+mysql> update shopping2 set xihuan=1 where name="xie";
+ERROR 1146 (42S02): Table 'shopping2.shopping2' doesn't exist
+mysql> update shopping21 set xihuan=1 where name="xie";
+Query OK, 1 row affected (0.22 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping;
+ERROR 1146 (42S02): Table 'shopping2.shopping' doesn't exist
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | NULL   | NULL     |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
++----+----------+--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into shopping21(zhekou,yuanwang)values("dazhe","mai");
+ERROR 1406 (22001): Data too long for column 'zhekou' at row 1
+mysql> insert into shopping21(zhekou,yuanwang)values("1","mai");
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from shopping;
+ERROR 1146 (42S02): Table 'shopping2.shopping' doesn't exist
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | NULL   | NULL     |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
+|  4 | NULL     | NULL   | 1      | mai      |
++----+----------+--------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> updat shopping21 set zhekou="1",yuanwang="mai" where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'updat shopping21 set zhekou="1",yuanwang="mai" where id=1' at line 1
+mysql> update shopping21 set zhekou="1",yuanwang="mai" where id=1;
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | 1      | mai      |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
+|  4 | NULL     | NULL   | 1      | mai      |
++----+----------+--------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table shopping21 drop id=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=4' at line 1
+mysql> delete from shopping21 where id=4;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | 1      | mai      |
+|  2 | luotoTxu | NULL   | NULL   | NULL     |
++----+----------+--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> update shopping21 set xihuan="1",zhekou="1",yuanwang="mai" where id=2;
+Query OK, 1 row affected (0.21 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | 1      | mai      |
+|  2 | luotoTxu | 1      | 1      | mai      |
++----+----------+--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> updata shopping21 set yuanwang="bu" where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'updata shopping21 set yuanwang="bu" where id=1' at line 1
+mysql> update shopping21 set yuanwang="bu" where id=1;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shopping21;
++----+----------+--------+--------+----------+
+| id | name     | xihuan | zhekou | yuanwang |
++----+----------+--------+--------+----------+
+|  1 | xie      | 1      | 1      | bu       |
+|  2 | luotoTxu | 1      | 1      | mai      |
++----+----------+--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> create table shopping21 (id int primary key auto_increment,name varchar(20),idDelete varchar(1)）;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '）' at line 1
+mysql> create table shopping21 (id int primary key auto_increment,name varchar(20),idDelete varchar(1));
+ERROR 1050 (42S01): Table 'shopping21' already exists
+mysql> create table shopping22 (id int primary key auto_increment,name varchar(20),idDelete varchar(1));
+Query OK, 0 rows affected (0.71 sec)
+
+mysql> select * from shopping22;
+Empty set (0.00 sec)
+
+mysql> desc shopping22;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(20) | YES  |     | NULL    |                |
+| idDelete | varchar(1)  | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into shopping22(name,idDelete) values("yeyun",0);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> selete * from shopping22;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selete * from shopping22' at line 1
+mysql> select * from shopping22;
++----+-------+----------+
+| id | name  | idDelete |
++----+-------+----------+
+|  1 | yeyun | 0        |
++----+-------+----------+
+1 row in set (0.00 sec)
